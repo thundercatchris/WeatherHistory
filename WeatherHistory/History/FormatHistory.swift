@@ -29,9 +29,7 @@ class FormatHistory {
             if array.count >= 7 {
                 sun = array[6]
             }
-
             return History(date: dateString, tmax: tmax, tmin: tmin, afDays: afDays, rain: rain, sun: sun)
-  
         }
         return nil
     }

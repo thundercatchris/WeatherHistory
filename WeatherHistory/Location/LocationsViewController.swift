@@ -11,7 +11,6 @@ import UIKit
 class LocationsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
     @IBOutlet weak var tableView: UITableView!
-    
     var locations:[Location]?
     
     override func viewDidLoad() {
@@ -39,9 +38,7 @@ class LocationsViewController: UIViewController, UITableViewDelegate, UITableVie
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "locationCell", for: indexPath) as! LocationTableViewCell
-        
         cell.prepareForReuse()
-        
         if let location = locations?[indexPath.row] {
             cell.location = location
         }
@@ -59,6 +56,9 @@ class LocationsViewController: UIViewController, UITableViewDelegate, UITableVie
             let nextScene = segue.destination as? DetailViewController ,
             let indexPath = self.tableView.indexPathForSelectedRow, let location = locations?[indexPath.row] {
             nextScene.location = location
+            let backItem = UIBarButtonItem()
+            backItem.title = "Back"
+            navigationItem.backBarButtonItem = backItem
         }
     }
 

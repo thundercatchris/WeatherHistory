@@ -1,31 +1,41 @@
 //
 //  NetworkRequest.swift
-//  Major Roads
-//
-//  Created by Cerebro on 11/05/2018.
 //  Copyright © 2018 thundercatchris. All rights reserved.
 //
 
 import Foundation
 import Alamofire
 
+
 class NetworkRequest {
     
-    let apiKey = "13b23e8c-d7ad-4dad-8f39-4fa0a437d1ff"
-    let apiBaseURL = "http://datapoint.metoffice.gov.uk/public/data/"
     
-    func locationsRequest(completionHandler: @escaping (_ result: Result<String>) -> Void) {
-        let url = "\(apiBaseURL)val/wxobs/all/datatype/sitelist?key=\(apiKey)"
-        Alamofire.request(url).responseString { response in
-            completionHandler(response.result)
+    func locationsRequest(completionHandler: @escaping (_ resultsString: [Location]? ) -> Void) {
+        let url = "https://data.gov.uk/dataset/17ba3bbe-0e98-4a8c-9937-bd1d50fdc3c5/historical-monthly-data-for-meteorological-stations"
+        Alamofire.request(url).responseJSON { response in
+            
+            if let data = response.data, let utf8Text = String(data: data, encoding: .utf8) {
+                
+                LocationParser().locationsArrayFromString(dataString: utf8Text, completionHandler: { (locations) in
+                    completionHandler(locations)
+                })
+            }
         }
     }
     
-    func locationDetailRequest(locationId: String, completionHandler: @escaping (_ result: Result<String>) -> Void) {
-        let url = "\(apiBaseURL)val/wxfcs/all/xml/\(locationId)?res=3hourly&key=\(apiKey)"
-        Alamofire.request(url).responseString { response in
-            completionHandler(response.result)
+    func locationHistoryRequest(url: String, completionHandler: @escaping (_ resultsString: [History]? ) -> Void) {
+        Alamofire.request(url).response { response in
+            if let data = response.data, let utf8Text = String(data: data, encoding: .utf8) {
+                
+                HistoryParser().locationDataArrayFromString(dataString: utf8Text
+                    , completionHandler: { (historyArray) in
+                        completionHandler(historyArray)
+                })
+                
+            } else {
+                completionHandler(nil)
+            }
         }
     }
-    
 }
+

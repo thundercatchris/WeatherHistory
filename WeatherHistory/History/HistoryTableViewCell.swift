@@ -11,12 +11,12 @@ import UIKit
 class HistoryTableViewCell: UITableViewCell {
     
     var history:History!
-
+    
     @IBOutlet weak var tmaxLabel: UILabel!
-     @IBOutlet weak var tminLabel: UILabel!
-     @IBOutlet weak var afDaysLabel: UILabel!
-     @IBOutlet weak var rainLabel: UILabel!
-     @IBOutlet weak var sunLabel: UILabel!
+    @IBOutlet weak var tminLabel: UILabel!
+    @IBOutlet weak var afDaysLabel: UILabel!
+    @IBOutlet weak var rainLabel: UILabel!
+    @IBOutlet weak var sunLabel: UILabel!
     @IBOutlet weak var dateLabel: UILabel!
     
     override func awakeFromNib() {
@@ -43,7 +43,7 @@ class HistoryTableViewCell: UITableViewCell {
     
     override func prepareForReuse() {
         history = nil
-//        nameLabel.text = ""
+        //        nameLabel.text = ""
     }
-
+    
 }

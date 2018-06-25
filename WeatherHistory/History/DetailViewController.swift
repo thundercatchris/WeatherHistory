@@ -24,12 +24,12 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
         keyView.layer.borderColor = UIColor.lightGray.cgColor
         keyView.layer.borderWidth = 0.5
         
+        title = location.name
+        
         NetworkRequest().locationHistoryRequest(url: location.url) { (history) in
             self.history = history
             self.tableView.reloadData()
-            
         }
-        
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -41,9 +41,7 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "historyCell", for: indexPath) as! HistoryTableViewCell
-        
         cell.prepareForReuse()
-        
         if let hist = history?[indexPath.row] {
             cell.history = hist
         }
@@ -56,16 +54,4 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
-    
-    /*
-     // MARK: - Navigation
-     
-     // In a storyboard-based application, you will often want to do a little preparation before navigation
-     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-     // Get the new view controller using segue.destinationViewController.
-     // Pass the selected object to the new view controller.
-     }
-     */
-    
 }
